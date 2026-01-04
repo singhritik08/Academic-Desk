@@ -1,4 +1,4 @@
-package com.jsp.academicDesk.Entity;
+package com.jsp.academicDesk.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

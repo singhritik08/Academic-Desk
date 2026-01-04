@@ -1,4 +1,4 @@
-package com.jsp.academicDesk.Entity;
+package com.jsp.academicDesk.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Enrollment {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne

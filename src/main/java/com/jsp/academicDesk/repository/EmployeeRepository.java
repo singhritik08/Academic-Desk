@@ -1,6 +1,6 @@
-package com.jsp.academicDesk.Repository;
+package com.jsp.academicDesk.repository;
 
-import com.jsp.academicDesk.Entity.Employee;
+import com.jsp.academicDesk.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
