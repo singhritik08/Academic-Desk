@@ -1,5 +1,6 @@
 package com.jsp.academicDesk.dto.request;
 
+import com.jsp.academicDesk.entity.Role;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +27,7 @@ public class RegisterRequest {
         @Size(min = 10,max = 10,message = "10 digits required")
         private String phone;
         private String password;
-        private String role;
+        private Role role;
         private LocalDate dateOfBirth;
 
 }

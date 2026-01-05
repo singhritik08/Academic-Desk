@@ -39,6 +39,7 @@ public class Student implements UserDetails {
     private String phone;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
     private String password;

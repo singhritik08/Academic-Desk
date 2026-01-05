@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface AuthService {
-
+public interface EmployeeService {
     AuthResponse register(RegisterRequest registerRequest);
+
     LoginResponse login(LoginRequest loginRequest);
 
-    List<UserResponse> getAllStudents();
+    Student loadStudentByEmail(String username);
 
-    Student loadStudentByEmail(String email);
+    List<UserResponse> getAllEmployee();
 }

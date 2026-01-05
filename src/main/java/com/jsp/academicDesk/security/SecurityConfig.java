@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
 
                         .requestMatchers("/academicDesk/auth/**").permitAll()
+                        .requestMatchers("/employee/**").permitAll()
 
                         .anyRequest().authenticated()
                 )

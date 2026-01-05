@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class StudentResponse {
+public class UserResponse {
 
-    private int studentId;
+    private int id;
     private String name;
     private String email;
     private String phone;

@@ -3,13 +3,11 @@ package com.jsp.academicDesk.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.net.ProtocolFamily;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_id_seq")
@@ -31,7 +30,9 @@ public class Employee {
     @Size(min = 10,max = 10,message = "valid phone number")
     private String phone;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
     private String password;
     private LocalDate dateOfBirth;
@@ -40,4 +41,7 @@ public class Employee {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
+
 }

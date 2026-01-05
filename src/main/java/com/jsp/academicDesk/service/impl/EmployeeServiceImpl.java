@@ -5,15 +5,15 @@ import com.jsp.academicDesk.dto.request.RegisterRequest;
 import com.jsp.academicDesk.dto.response.AuthResponse;
 import com.jsp.academicDesk.dto.response.LoginResponse;
 import com.jsp.academicDesk.dto.response.UserResponse;
+import com.jsp.academicDesk.entity.Employee;
 import com.jsp.academicDesk.entity.Role;
 import com.jsp.academicDesk.entity.Student;
-
-import com.jsp.academicDesk.exception.UserNotFoundException;
-import com.jsp.academicDesk.repository.StudentRepository;
-import com.jsp.academicDesk.security.JwtService;
-import com.jsp.academicDesk.service.AuthService;
 import com.jsp.academicDesk.exception.StudentException;
-import lombok.*;
+import com.jsp.academicDesk.exception.UserNotFoundException;
+import com.jsp.academicDesk.repository.EmployeeRepository;
+import com.jsp.academicDesk.security.JwtService;
+import com.jsp.academicDesk.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,9 +25,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class EmployeeServiceImpl implements EmployeeService {
+    private final EmployeeRepository employeeRepository;
 
-    private final StudentRepository studentRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -35,11 +35,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse register(RegisterRequest registerRequest) {
-        if (studentRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
-            throw new StudentException("Student already exists");
+        if (employeeRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            throw new StudentException("Employee already exists");
         }
 
-        Student student = Student.builder()
+        Employee employee = Employee.builder()
                 .name(registerRequest.getName())
                 .email(registerRequest.getEmail())
                 .phone(registerRequest.getPhone())
@@ -48,17 +48,16 @@ public class AuthServiceImpl implements AuthService {
                 .dateOfBirth(registerRequest.getDateOfBirth())
                 .build();
 
-        Student savedStudent = studentRepository.save(student);
+        Employee savedEmployee = employeeRepository.save(employee);
 
         AuthResponse authResponse = AuthResponse.builder()
-                .name(savedStudent.getName())
-                .email(savedStudent.getEmail())
-                .id(savedStudent.getStudentId())
+                .name(savedEmployee.getName())
+                .email(savedEmployee.getEmail())
+                .id(savedEmployee.getEmployeeId())
                 .build();
 
         return authResponse;
     }
-
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
 
@@ -80,19 +79,19 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
     @Override
-    public List<UserResponse> getAllStudents() {
-        return studentRepository.findAll()
+    public List<UserResponse> getAllEmployee() {
+        return employeeRepository.findAll()
                 .stream()
-                .map(student -> new UserResponse(
-                        student.getStudentId(),
-                        student.getName(),
-                        student.getEmail(),
-                        student.getPhone(),
-                        student.getRole(),
-                        student.getPassword(),
-                        student.getDateOfBirth(),
-                        student.getCreatedAt(),
-                        student.getUpdatedAt()
+                .map(employee -> new UserResponse(
+                        employee.getEmployeeId(),
+                        employee.getName(),
+                        employee.getEmail(),
+                        employee.getPhone(),
+                        employee.getRole(),
+                        employee.getPassword(),
+                        employee.getDateOfBirth(),
+                        employee.getCreatedAt(),
+                        employee.getUpdatedAt()
                 ))
                 .toList();
     }
@@ -100,8 +99,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Student loadStudentByEmail(String email) {
 
-            return studentRepository.findByEmail(email)
-                    .orElseThrow(() -> new UserNotFoundException("Student not found "));
+        return (Student) employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Employee not found "));
     }
-}
 
+}
