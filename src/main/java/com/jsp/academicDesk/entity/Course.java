@@ -19,5 +19,7 @@ public class Course {
     private String courseName;
     @Column(nullable = false)
     private double courseFee;
+    private String courseDuration;
+
 
 }

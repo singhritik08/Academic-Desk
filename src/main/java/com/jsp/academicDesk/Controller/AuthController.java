@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/academicDesk/auth")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class AuthController {
 
     @Autowired
@@ -29,6 +30,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(registerRequest));
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
