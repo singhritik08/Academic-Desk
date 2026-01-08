@@ -14,6 +14,8 @@ import com.jsp.academicDesk.security.JwtService;
 import com.jsp.academicDesk.service.AuthService;
 import com.jsp.academicDesk.exception.StudentException;
 import lombok.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -103,5 +105,16 @@ public class AuthServiceImpl implements AuthService {
             return studentRepository.findByEmail(email)
                     .orElseThrow(() -> new UserNotFoundException("Student not found "));
     }
+
+
+
+    @Override
+    public Page<UserResponse> fetchAllStudents(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return studentRepository.findAll(pageable)
+                .map(student -> new UserResponse(student));
+    }
+
+
 }
 

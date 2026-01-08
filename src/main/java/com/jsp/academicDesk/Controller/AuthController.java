@@ -9,6 +9,7 @@ import com.jsp.academicDesk.entity.Student;
 import com.jsp.academicDesk.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -46,7 +47,13 @@ public class AuthController {
 
     @GetMapping("/all")
     public ResponseEntity<List<UserResponse>> getAllStudents() {
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.getAllStudents());
+        return ResponseEntity.status(HttpStatus.OK).body(authService.getAllStudents());
+    }
+
+    @GetMapping("/fetch/all/students")
+    public ResponseEntity<Page<UserResponse>> fetchAllStudents(@RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "10") int size){
+        return ResponseEntity.ok(authService.fetchAllStudents(page, size));
     }
 
 }
