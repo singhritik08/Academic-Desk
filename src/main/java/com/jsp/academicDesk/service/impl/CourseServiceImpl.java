@@ -1,5 +1,6 @@
 package com.jsp.academicDesk.service.impl;
 
+import com.jsp.academicDesk.dto.request.CourseUpdateRequest;
 import com.jsp.academicDesk.entity.Course;
 import com.jsp.academicDesk.exception.CourseException;
 import com.jsp.academicDesk.repository.CourseRepository;
@@ -15,7 +16,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course createCourse(Course courseRequest) {
-        if(courseRepository.findBycourseName(courseRequest.getCourseName())){
+        if(courseRepository.existsByCourseName(courseRequest.getCourseName())){
             throw new CourseException("Course already exist");
         }
 
@@ -27,5 +28,16 @@ public class CourseServiceImpl implements CourseService {
         Course saveCourse = courseRepository.save(course);
 
         return saveCourse;
+    }
+
+    @Override
+    public Course updateCourse(int courseId, CourseUpdateRequest courseUpdate) {
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course Not Found"));
+
+        course.setCourseName(courseUpdate.getCourseName());
+        course.setCourseFee(courseUpdate.getCourseFee());
+        course.setCourseDuration(courseUpdate.getCourseDuration());
+
+        return courseRepository.save(course);
     }
 }
