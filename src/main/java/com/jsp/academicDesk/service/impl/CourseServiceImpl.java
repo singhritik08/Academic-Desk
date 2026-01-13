@@ -40,4 +40,14 @@ public class CourseServiceImpl implements CourseService {
 
         return courseRepository.save(course);
     }
+
+    @Override
+    public boolean deleteById(int courseId) {
+        if (!courseRepository.existsById(courseId)) {
+            return false;
+        }
+        courseRepository.deleteById(courseId);
+        return true;
+    }
+
 }

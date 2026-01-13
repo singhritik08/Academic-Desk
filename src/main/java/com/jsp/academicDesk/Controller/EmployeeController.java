@@ -43,4 +43,5 @@ public class EmployeeController {
     public ResponseEntity<List<UserResponse>> getAllEmployee() {
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.getAllEmployee());
     }
+
 }

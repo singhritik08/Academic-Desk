@@ -26,8 +26,15 @@ public class CourseController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Course> deleteCourse(@RequestParam int courseId){
-        return null;
+    public ResponseEntity<Void> deleteCourse(@RequestParam int courseId) {
+        boolean deleted = courseService.deleteById(courseId);
+
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
 }

@@ -9,4 +9,6 @@ public interface CourseService {
     Course createCourse(Course course);
 
     Course updateCourse(int courseId, CourseUpdateRequest courseUpdate);
+
+    boolean deleteById(int courseId);
 }
